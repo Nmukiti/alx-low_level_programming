@@ -1,39 +1,50 @@
 #include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+
 /**
- * *_realloc - reallocate memory size function
- * @ptr: pointer to address of old memory location
- * @old_size: unsigned int type of old memory size
- * @new_size: unsigned int type for new memory size
- * Return:  return pointer to array
+ * argstostr - function that concatenates all the arguments of your program.
+ *
+ *
+ * @ac: ARGC
+ * @av: ARGV
+ *
+ * Return: Pointer
  */
-
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+char *argstostr(int ac, char **av)
 {
-	char *s;
+	int i = 0, j, longitud = 0, l, k;
+	char *string;
 
-	if (new_size > old_size)
+	if (ac == 0 || av == '\0')
+	return (NULL);
+
+	for (i = 0; i < ac; i++)
 	{
-		s = malloc(new_size);
-		free(ptr);
-		return (s);
+		j = 0;
+		while (av[i][j] != '\0')
+		{
+			j++;
+		}
+		longitud  +=  j + 1;
 	}
-	if (new_size == old_size)
+	string = malloc(sizeof(char) * (longitud + 1));
+
+	if (string == NULL)
 	{
-		return (ptr);
-	}
-	if (ptr == NULL)
-	{
-		s = malloc(new_size);
-		free(ptr);
-		return (s);
-	}
-	if (new_size == 0 && ptr != NULL)
-	{
-		free(ptr);
 		return (NULL);
 	}
-	return (ptr);
+	longitud = 0;
+	for (k = 0; k < ac; k++)
+	{
+		for (l = 0; av[k][l] != '\0'; l++)
+		{
+			*(string + longitud) = av[k][l];
+			longitud++;
+		}
+		*(string + longitud) = '\n';
+		longitud++;
+	}
+
+	return (string);
 }
